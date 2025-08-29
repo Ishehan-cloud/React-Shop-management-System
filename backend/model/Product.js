@@ -31,7 +31,8 @@ const productSchema = new mongoose.Schema({
   },
   barcode: {
     type: String,
-    unique: true
+    unique: true,
+    sparse: true
   },
   minStockLevel: {
     type: Number,
