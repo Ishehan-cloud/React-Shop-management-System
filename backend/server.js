@@ -16,7 +16,18 @@ mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => console.log('✅ Connected to MongoDB'))
+.then(async () => {
+  console.log('✅ Connected to MongoDB');
+  try {
+    const Product = require('./model/Product');
+    const Sale = require('./model/Sale');
+    await Product.syncIndexes();
+    await Sale.syncIndexes();
+    console.log('🔧 Synced MongoDB indexes');
+  } catch (e) {
+    console.warn('⚠️  Failed to sync indexes:', e.message);
+  }
+})
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Routes
